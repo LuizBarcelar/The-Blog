@@ -50,6 +50,7 @@ O projeto está organizado em um sistema de monorepo para facilitar a manutenç�
 ```bash
 git clone [https://github.com/LuizBarcelar/The-Blog.git](https://github.com/LuizBarcelar/The-Blog.git)
 cd The-Blog
+```
 
 ---
 

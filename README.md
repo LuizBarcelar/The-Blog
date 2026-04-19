@@ -50,3 +50,11 @@ O projeto está organizado em um sistema de monorepo para facilitar a manutenç�
 ```bash
 git clone [https://github.com/LuizBarcelar/The-Blog.git](https://github.com/LuizBarcelar/The-Blog.git)
 cd The-Blog
+
+---
+
+## 📸 Screenshots
+
+| Home do Blog | Dashboard Admin | Preview de Upload |
+| :---: | :---: | :---: |
+| ![Home](./screenshots/home.png) | ![Admin](./screenshots/admin-dashboard.png) | ![Upload](./screenshots/upload-preview.png) |

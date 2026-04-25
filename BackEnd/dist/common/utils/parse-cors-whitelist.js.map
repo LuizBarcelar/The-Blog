@@ -1,0 +1,1 @@
+{"version":3,"file":"parse-cors-whitelist.js","sourceRoot":"","sources":["../../../src/common/utils/parse-cors-whitelist.ts"],"names":[],"mappings":";;AAAA,gDAKC;AALD,SAAgB,kBAAkB,CAAC,GAAW;IAC5C,OAAO,GAAG;SACP,KAAK,CAAC,MAAM,CAAC;SACb,GAAG,CAAC,GAAG,CAAC,EAAE,CAAC,GAAG,CAAC,OAAO,CAAC,MAAM,EAAE,EAAE,CAAC,CAAC;SACnC,MAAM,CAAC,OAAO,CAAC,CAAC;AACrB,CAAC"}

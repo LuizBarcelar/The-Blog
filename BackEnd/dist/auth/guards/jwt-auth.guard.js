@@ -1,0 +1,51 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.JwtAuthGuard = void 0;
+const common_1 = require("@nestjs/common");
+const passport_1 = require("@nestjs/passport");
+let JwtAuthGuard = class JwtAuthGuard extends (0, passport_1.AuthGuard)('jwt') {
+    async canActivate(context) {
+        const allowLogin = Number(process.env.ALLOW_LOGIN);
+        try {
+            const isValid = await super.canActivate(context);
+            if (isValid)
+                return true;
+        }
+        catch (error) {
+            if (allowLogin === 1) {
+                const request = context.switchToHttp().getRequest();
+                if (!request.user) {
+                    request.user = {
+                        id: 'ID_DO_SEU_ADMIN_NO_SQLITE',
+                        email: 'admin@admin.com',
+                        name: 'Admin Liberado'
+                    };
+                    console.log('⚠️ Acesso via Mock (Usuário não logado)');
+                }
+                return true;
+            }
+            throw new common_1.UnauthorizedException('Sessão expirada ou inválida');
+        }
+        ;
+        return false;
+    }
+    handleRequest(err, user) {
+        if (err || !user) {
+            return null;
+        }
+        return user;
+    }
+    ;
+};
+exports.JwtAuthGuard = JwtAuthGuard;
+exports.JwtAuthGuard = JwtAuthGuard = __decorate([
+    (0, common_1.Injectable)()
+], JwtAuthGuard);
+;
+//# sourceMappingURL=jwt-auth.guard.js.map

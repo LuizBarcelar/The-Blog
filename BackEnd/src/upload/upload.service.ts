@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { fileTypeFromBuffer } from 'file-type';
+import { fromBuffer } from 'file-type';
 import { writeFileSync, existsSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
 import { generateRandomSuffix } from 'src/common/utils/generate-random-suffix';
@@ -17,7 +17,7 @@ export class UploadService {
       throw new BadRequestException('Arquivo muito grande');
     }
 
-    const fileType = await fileTypeFromBuffer(file.buffer);
+    const fileType = await fromBuffer(file.buffer);
 
     if (
       !fileType ||

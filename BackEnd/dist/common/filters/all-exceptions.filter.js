@@ -10,7 +10,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AllExceptionsFilter = void 0;
 const common_1 = require("@nestjs/common");
 let AllExceptionsFilter = AllExceptionsFilter_1 = class AllExceptionsFilter {
-    logger = new common_1.Logger(AllExceptionsFilter_1.name);
+    constructor() {
+        this.logger = new common_1.Logger(AllExceptionsFilter_1.name);
+    }
     catch(exception, host) {
         const response = host.switchToHttp().getResponse();
         const isHttpException = exception instanceof common_1.HttpException;

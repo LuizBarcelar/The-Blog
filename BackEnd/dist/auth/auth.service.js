@@ -15,9 +15,6 @@ const user_service_1 = require("../user/user.service");
 const hashing_service_1 = require("../common/hashing/hashing.service");
 const jwt_1 = require("@nestjs/jwt");
 let AuthService = class AuthService {
-    userService;
-    hashingService;
-    jwtService;
     constructor(userService, hashingService, jwtService) {
         this.userService = userService;
         this.hashingService = hashingService;

@@ -57,7 +57,7 @@ async function bootstrap() {
         }
         console.log('✅ Seeds de posts finalizados.');
     }
-    const port = process.env.APP_PORT ?? 3001;
+    const port = process.env.PORT || process.env.APP_PORT || 3001;
     await app.listen(port);
     console.log(`🚀 Backend rodando na porta ${port}`);
 }

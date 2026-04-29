@@ -12,11 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreatePostDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreatePostDto {
-    title;
-    excerpt;
-    content;
-    coverImageUrl;
-    published;
 }
 exports.CreatePostDto = CreatePostDto;
 __decorate([

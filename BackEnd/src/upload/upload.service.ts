@@ -1,5 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
-import { fileTypeFromBuffer } from 'file-type';
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { writeFileSync, existsSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
 import { generateRandomSuffix } from 'src/common/utils/generate-random-suffix';
@@ -17,13 +16,12 @@ export class UploadService {
       throw new BadRequestException('Arquivo muito grande');
     }
 
-    const fileType = await fileTypeFromBuffer(file.buffer);
+    const fileTypeModule = await import('file-type');
+    const type = await fileTypeModule.fileTypeFromBuffer(file.buffer);
 
     if (
-      !fileType ||
-      !['image/png', 'image/jpeg', 'image/webp', 'image/gif'].includes(
-        fileType.mime,
-      )
+      !type ||
+      !['image/png', 'image/jpeg', 'image/webp', 'image/gif'].includes(type.mime)
     ) {
       throw new BadRequestException('Arquivo inválido ou tipo não permitido.');
     }
@@ -36,12 +34,10 @@ export class UploadService {
     }
 
     const uniqueSuffix = `${Date.now()}-${generateRandomSuffix()}`;
-    const fileExtension = fileType.ext;
-    const fileName = `${uniqueSuffix}.${fileExtension}`;
+    const fileName = `${uniqueSuffix}.${type.ext}`;
     const fileFullPath = resolve(uploadPath, fileName);
 
-    // Salvar o buffer no disco
-    writeFileSync(fileFullPath, file.buffer);
+    writeFileSync(fileFullPath, file.buffer)
 
     return {
       url: `/${today}/${fileName}`,

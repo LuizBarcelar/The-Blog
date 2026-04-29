@@ -14,7 +14,6 @@ const mapped_types_1 = require("@nestjs/mapped-types");
 const class_validator_1 = require("class-validator");
 const create_post_dto_1 = require("./create-post.dto");
 class UpdatePostDto extends (0, mapped_types_1.PartialType)((0, mapped_types_1.PickType)(create_post_dto_1.CreatePostDto, ['title', 'coverImageUrl', 'excerpt', 'content'])) {
-    published;
 }
 exports.UpdatePostDto = UpdatePostDto;
 __decorate([

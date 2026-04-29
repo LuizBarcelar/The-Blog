@@ -20,7 +20,6 @@ const create_post_dto_1 = require("./dto/create-post.dto");
 const post_response_dto_1 = require("./dto/post-response.dto");
 const update_post_dto_1 = require("./dto/update-post.dto");
 let PostController = class PostController {
-    postService;
     constructor(postService) {
         this.postService = postService;
     }

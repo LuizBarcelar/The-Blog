@@ -20,10 +20,9 @@ const typeorm_2 = require("typeorm");
 const post_entity_1 = require("./entities/post.entity");
 const create_slug_from_text_1 = require("../common/utils/create-slug-from-text");
 let PostService = PostService_1 = class PostService {
-    postRepository;
-    logger = new common_1.Logger(PostService_1.name);
     constructor(postRepository) {
         this.postRepository = postRepository;
+        this.logger = new common_1.Logger(PostService_1.name);
     }
     async findOneOrFail(postData, author) {
         const post = await this.findOne(postData);

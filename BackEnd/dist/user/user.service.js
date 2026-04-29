@@ -19,8 +19,6 @@ const user_entity_1 = require("./entities/user.entity");
 const typeorm_2 = require("typeorm");
 const hashing_service_1 = require("../common/hashing/hashing.service");
 let UserService = class UserService {
-    userRepository;
-    hashingService;
     constructor(userRepository, hashingService) {
         this.userRepository = userRepository;
         this.hashingService = hashingService;

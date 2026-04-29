@@ -19,7 +19,6 @@ const jwt_auth_guard_1 = require("../auth/guards/jwt-auth.guard");
 const upload_config_1 = require("./upload.config");
 const upload_service_1 = require("./upload.service");
 let UploadController = class UploadController {
-    uploadService;
     constructor(uploadService) {
         this.uploadService = uploadService;
     }

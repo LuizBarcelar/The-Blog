@@ -22,8 +22,6 @@ const update_user_dto_1 = require("./dto/update-user.dto");
 const user_response_dto_1 = require("./dto/user-response.dto");
 const update_password_dto_1 = require("./dto/update-password.dto");
 let UserController = class UserController {
-    configService;
-    userService;
     constructor(configService, userService) {
         this.configService = configService;
         this.userService = userService;

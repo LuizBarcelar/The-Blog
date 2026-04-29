@@ -2,16 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostResponseDto = void 0;
 class PostResponseDto {
-    id;
-    title;
-    slug;
-    content;
-    excerpt;
-    coverImageUrl;
-    published;
-    createdAt;
-    updatedAt;
-    author;
     constructor(post) {
         this.id = post.id;
         this.title = post.title;

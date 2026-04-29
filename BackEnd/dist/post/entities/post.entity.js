@@ -13,16 +13,6 @@ exports.Post = void 0;
 const user_entity_1 = require("../../user/entities/user.entity");
 const typeorm_1 = require("typeorm");
 let Post = class Post {
-    id;
-    title;
-    slug;
-    content;
-    excerpt;
-    coverImageUrl;
-    published;
-    createdAt;
-    updatedAt;
-    author;
 };
 exports.Post = Post;
 __decorate([

@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
-import { User } from 'src/user/entities/user.entity';
-import { title } from 'process';
+import { User } from '../user/entities/user.entity';
+
 import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
 import { createSlugFromText } from 'src/common/utils/create-slug-from-text';

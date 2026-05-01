@@ -37,6 +37,7 @@ async function bootstrap() {
   );
 
 // --- LÓGICA DE SEED (VERSÃO COMPATÍVEL) ---
+if (process.env.NODE_ENV !== 'production') {
   const userService = app.get(UserService);
   const postService = app.get(PostService);
   
@@ -50,33 +51,25 @@ async function bootstrap() {
       name: 'Luiz Barcelar',
       email: adminEmail,
       password: '123456',
-    } as any);
-    console.log('✅ Usuário administrador criado com ID:', (admin as any).id);
+    } as any)
   }
 
   // 2. Criar os Posts (usando o ID real do admin encontrado ou criado)
   const existingPosts = await postService.findAll({} as any).catch(() => []); 
   
   if (existingPosts.length === 0) {
-    console.log('🌱 Banco SQLite vazio! Inserindo posts de segurança...');
-    
-    // Pegamos o ID do admin para garantir que o post tenha um dono
-    const idDoAutor = (admin as any).id;
-
+    console.log('🌱 Banco SQLite vazio! Inserindo posts de segurança...')
     for (const postData of SEED_POSTS) {
-      const idDoAutor = (admin as any).id;
       await postService.create({
         title: postData.title,
         content: postData.content,
         excerpt: postData.excerpt,
         coverImageUrl: postData.coverImageUrl,
         published: true
-       }, admin).catch(err => 
-        console.error(err.message)
-      );
+      }, admin)
     }
-    console.log('✅ Seeds de posts finalizados.');
   }
+}
   // --- FIM DA LÓGICA DE SEED ---
 
   const port = process.env.PORT || process.env.APP_PORT || 3001;

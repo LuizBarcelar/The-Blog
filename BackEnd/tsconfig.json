@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["node", "jest"],
     "module": "Node16",
     "moduleResolution": "node16",
     "target": "ES2021",

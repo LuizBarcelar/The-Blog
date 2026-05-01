@@ -17,17 +17,17 @@ export class PostResponseDto {
   };
 
   constructor(post: Post) {
-    this.id = post.id;
-    this.title = post.title;
-    this.slug = post.slug;
-    this.content = post.content;
-    this.excerpt = post.excerpt;
+    this.id = post.id!;
+    this.title = post.title!;
+    this.slug = post.slug!;
+    this.content = post.content!;
+    this.excerpt = post.excerpt!;
     this.coverImageUrl = post.coverImageUrl ?? null;
-    this.published = post.published;
-    this.createdAt = post.createdAt;
-    this.updatedAt = post.updatedAt;
+    this.published = post.published!;
+    this.createdAt = post.createdAt!;
+    this.updatedAt = post.updatedAt!;
     this.author = {
-      id: post.author?.id || '',
+      id: post.author?.id ?? '',
       name: post.author?.name || 'Autor Desconhecido',
       email: post.author?.email || '',
     };

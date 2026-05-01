@@ -1,34 +1,41 @@
-TypeOrmModule.forRootAsync({
-  useFactory: () => {
-    const isSqlite = process.env.DB_TYPE === 'better-sqlite3';
+import { Module } from '@nestjs/common';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { UserModule } from './user/user.module';
+import { PostModule } from './post/post.module';
 
-    if (isSqlite) {
-      return {
-        type: 'better-sqlite3',
-        database: process.env.DB_DATABASE || './db.sqlite',
-        synchronize: process.env.DB_SYNCHRONIZE === '1',
-        autoLoadEntities: process.env.DB_AUTO_LOAD_ENTITIES === '1',
-      };
-    }
+@Module({
+  imports: [
+    TypeOrmModule.forRootAsync({
+      useFactory: (): TypeOrmModuleOptions => {
+        const isSqlite = process.env.DB_TYPE === 'better-sqlite3';
 
-    return {
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT || '5432', 10),
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE,
+        if (isSqlite) {
+          return {
+            type: 'better-sqlite3',
+            database: process.env.DB_DATABASE || './db.sqlite',
+            synchronize: process.env.DB_SYNCHRONIZE === '1',
+            autoLoadEntities: true,
+          };
+        }
 
-      synchronize: process.env.DB_SYNCHRONIZE === '1',
-      autoLoadEntities: process.env.DB_AUTO_LOAD_ENTITIES === '1',
-
-      ssl: {
-        rejectUnauthorized: false,
+        return {
+          type: 'postgres',
+          host: process.env.DB_HOST,
+          port: parseInt(process.env.DB_PORT || '5432', 10),
+          username: process.env.DB_USERNAME,
+          password: process.env.DB_PASSWORD,
+          database: process.env.DB_DATABASE,
+          synchronize: process.env.DB_SYNCHRONIZE === '1',
+          autoLoadEntities: true,
+          ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+          extra: {
+            connectionTimeoutMillis: 5000,
+          },
+        };
       },
-
-      extra: {
-        connectionTimeoutMillis: 5000,
-      },
-    };
-  },
-}),
+    }),
+    UserModule,
+    PostModule,
+  ],
+})
+export class AppModule {}

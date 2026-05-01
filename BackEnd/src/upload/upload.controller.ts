@@ -17,7 +17,7 @@ export class UploadController {
   @Post()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file', { storage, limits, fileFilter }))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
+  uploadFile(@UploadedFile() file: any) {
     return this.uploadService.handleUpload(file);
   }
 }

@@ -5,7 +5,7 @@ import { generateRandomSuffix } from 'src/common/utils/generate-random-suffix';
 
 @Injectable()
 export class UploadService {
-  async handleUpload(file: Express.Multer.File) {
+  async handleUpload(file: any) {
     if (!file) {
       throw new BadRequestException('Nenhum arquivo enviado.');
     }

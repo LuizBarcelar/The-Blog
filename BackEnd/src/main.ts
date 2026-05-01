@@ -24,7 +24,10 @@ async function bootstrap() {
       if (!origin || corsWhiteList.includes(origin) || origin === 'http://localhost:3000') {
         return callback(null, true);
       };
-      return callback(new Error('Not allowed by CORS'), false);
+      origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        return callback(null, true);
+      }
     },
     credentials: true
   });
@@ -37,7 +40,7 @@ async function bootstrap() {
   );
 
 // --- LÓGICA DE SEED (VERSÃO COMPATÍVEL) ---
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.ENABLE_SEED === 'true') {
   const userService = app.get(UserService);
   const postService = app.get(PostService);
   

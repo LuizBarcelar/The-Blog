@@ -3,20 +3,16 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Patch,
   Post,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { CustomParseIntPipe } from 'src/common/pipes/custom-parse-int-pipe.pipe';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
-import { AuthGuard } from '@nestjs/passport';
-import type { Request } from 'express';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import type { AuthenticatedRequest } from 'src/auth/types/authenticated-request';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import type { AuthenticatedRequest } from '../auth/types/authenticated-request';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponseDto } from './dto/user-response.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';

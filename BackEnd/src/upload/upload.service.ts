@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { writeFileSync, existsSync, mkdirSync } from 'fs';
 import { resolve } from 'path';
-import { generateRandomSuffix } from 'src/common/utils/generate-random-suffix';
+import { generateRandomSuffix } from '../common/utils/generate-random-suffix';
 
 @Injectable()
 export class UploadService {

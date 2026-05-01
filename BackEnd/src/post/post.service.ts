@@ -10,7 +10,7 @@ import { User } from '../user/entities/user.entity';
 
 import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
-import { createSlugFromText } from 'src/common/utils/create-slug-from-text';
+import { createSlugFromText } from '../common/utils/create-slug-from-text';
 import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()

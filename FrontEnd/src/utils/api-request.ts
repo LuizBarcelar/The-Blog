@@ -12,7 +12,7 @@ type ApiRequestSuccess<T> = {
 
 export type ApiRequest<T> = ApiRequestError | ApiRequestSuccess<T>;
 
-export const apiUrl = process.env.API_URL || 'http://localhost:3001';
+export const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 export async function apiRequest<T>(
   path: string,
@@ -22,12 +22,18 @@ export async function apiRequest<T>(
 
   try {
     const res = await fetch(url, options);
-    const json = await res.json().catch(() => null);
+
+    let json: any = null;
+    try {
+      json = await res.json();
+    } catch {
+      json = null;
+    }
 
     if (!res.ok) {
       const errors = Array.isArray(json?.message)
         ? json.message
-        : [json?.message || 'Erro inesperado'];
+        : [json?.message || `Erro ${res.status}`];
 
       return {
         errors,
@@ -42,7 +48,7 @@ export async function apiRequest<T>(
       status: res.status,
     };
   } catch (err) {
-    console.log(err);
+    console.error('API ERROR:', err);
 
     return {
       errors: ['Falha ao conectar-se ao servidor'],

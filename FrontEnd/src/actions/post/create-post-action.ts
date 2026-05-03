@@ -70,6 +70,6 @@ export async function createPostAction(
 
   const createdPost = createPostResponse.data;
 
-  (revalidateTag as any)('posts');
+  revalidateTag('posts', 'page');
   redirect(`/admin/post/${createdPost.id}?created=1`);
 }

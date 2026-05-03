@@ -80,7 +80,8 @@ export async function updateUserAction(
   // Não vai atualizar o single post
   // O nome de usuário (caso atualizado) só vai mudar
   // após o revalidate por conta do cache
-  // revalidateTag('posts');
+  // revalidateTag('posts', 'page');
+  // revalidateTag(`post-${post.slug}`, 'page');
 
   return {
     user: PublicUserSchema.parse(updateResponse.data),

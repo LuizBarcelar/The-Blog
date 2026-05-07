@@ -6,7 +6,10 @@ export async function authenticatedApiRequest<T>(
   path: string,
   options?: RequestInit,
 ): Promise<ApiRequest<T>> {
+
   const jwtToken = await getLoginSessionForApi();
+
+  console.log('JWT TOKEN:', jwtToken);
 
   if (!jwtToken) {
     return {
@@ -20,6 +23,8 @@ export async function authenticatedApiRequest<T>(
     ...options?.headers,
     Authorization: `Bearer ${jwtToken}`,
   };
+
+  console.log('HEADERS:', headers)
 
   return apiRequest<T>(path, {
     ...options,

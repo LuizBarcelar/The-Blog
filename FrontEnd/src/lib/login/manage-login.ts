@@ -43,7 +43,7 @@ export async function createLoginSessionFromApi(jwt: string) {
 
   cookieStore.set(name, jwt, {
     httpOnly: true,
-    secure: false,
+    secure: true,
     sameSite: 'lax',
     expires: expiresAt,
     path: '/',

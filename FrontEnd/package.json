@@ -13,10 +13,8 @@
   "dependencies": {
     "@uiw/react-md-editor": "^4.0.5",
     "bcryptjs": "^3.0.2",
-    "better-sqlite3": "^11.9.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "drizzle-orm": "^0.41.0",
     "jose": "^6.0.10",
     "lucide-react": "^0.488.0",
     "next": "^16.2.1",
@@ -41,7 +39,6 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/sanitize-html": "^2.15.0",
-    "drizzle-kit": "^0.30.6",
     "eslint": "^9",
     "eslint-config-next": "15.3.0",
     "tailwindcss": "^4",

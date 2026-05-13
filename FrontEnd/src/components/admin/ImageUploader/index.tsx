@@ -95,7 +95,11 @@ export function ImageUploader({ disabled = false, onUploadSuccess }: ImageUpload
           {/* eslint-disable-next-line */}
           <img
             className='rounded-lg max-w-xs h-auto shadow-md'
-            src={imgUrl.startsWith('http') ? imgUrl : `http://localhost:3001${imgUrl}`}
+            src={
+              imgUrl.startsWith('http')
+              ? imgUrl
+              : `${process.env.NEXT_PUBLIC_API_URL}${imgUrl}`
+            }
             alt="Preview"
           />
         </div>

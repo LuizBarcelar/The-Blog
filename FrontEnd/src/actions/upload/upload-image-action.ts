@@ -40,7 +40,7 @@ export async function uploadImageAction(
   }
 
   const uploadResponse = await authenticatedApiRequest<{ url: string }>(
-    `/upload`,
+    `${process.env.NEXT_PUBLIC_API_URL}/upload`,
     {
       method: 'POST',
       body: formData,

@@ -1,10 +1,10 @@
-import { findAllPublicPostsFromApiCached } from '@/lib/post/queries/public';
+import { findAllPublicPostsCached } from '@/lib/post/queries/public';
 import ErrorMessage from '../ErrorMessage';
 import { PostCoverImage } from '../PostCoverImage';
 import { PostSummary } from '../PostSummary';
 
 export async function PostFeatured() {
-  const postsRes = await findAllPublicPostsFromApiCached();
+  const postsRes = await findAllPublicPostsCached();
   const noPostsFound = (
     <ErrorMessage
       contentTitle='Ops 😅'

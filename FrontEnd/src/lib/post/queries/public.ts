@@ -1,12 +1,13 @@
-import { PostModelFromApi } from '@/models/post/post-model'
+import { PostModelFromApi } from '@/models/post/post-model';
 import { apiRequest } from '@/utils/api-request';
 import { unstable_cache } from 'next/cache';
-import { cache } from 'react'
+import { notFound } from 'next/navigation';
+import { cache } from 'react';
 
 export const findAllPublicPostsCached = cache(
   unstable_cache(
     async () => {
-      return apiRequest<PostModelFromApi[]>(`/post`, {
+      return await apiRequest<PostModelFromApi[]>(`/post`, {
         next: {
           tags: ['posts'],
           revalidate: 86400,
@@ -18,22 +19,30 @@ export const findAllPublicPostsCached = cache(
       tags: ['posts'],
     },
   ),
-)
+);
 
 export const findPublicPostBySlugCached = cache((slug: string) => {
   return unstable_cache(
-    async () => {
-      return apiRequest<PostModelFromApi>(`/post/${slug}`, {
-        next: {
-          tags: [`post-${slug}`],
-          revalidate: 86400,
+    async (slug: string) => {
+      const postResponse = await apiRequest<PostModelFromApi>(
+        `/post/${slug}`,
+        {
+          next: {
+            tags: [`post-${slug}`],
+            revalidate: 86400,
+          },
         },
-      });
+      );
+
+      if (!postResponse.success || !postResponse.data) {
+        notFound();
+      }
+
+      return postResponse;
     },
     [`post-${slug}`],
     {
       tags: [`post-${slug}`],
-    }
-  )();
-});
-
+    },
+  )(slug);
+})

@@ -21,15 +21,17 @@ async function bootstrap() {
 
   app.enableCors({
     origin: (origin, callback) => {
-      if (!origin || corsWhiteList.includes(origin) || origin === 'http://localhost:3000') {
-        return callback(null, true);
-      };
-      origin: (origin, callback) => {
-        if (!origin) return callback(null, true);
+      if (
+        !origin ||
+        corsWhiteList.includes(origin) ||
+        origin === 'http://localhost:3000'
+      ) {
         return callback(null, true);
       }
+
+      return callback(null, true);
     },
-    credentials: true
+    credentials: true,
   });
 
   app.useGlobalPipes(

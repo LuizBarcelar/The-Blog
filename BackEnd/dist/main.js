@@ -16,46 +16,45 @@ async function bootstrap() {
     const corsWhiteList = (0, parse_cors_whitelist_1.parseCorsWhitelist)(process.env.CORS_WHITELIST ?? '');
     app.enableCors({
         origin: (origin, callback) => {
-            if (!origin || corsWhiteList.includes(origin) || origin === 'http://localhost:3000') {
+            if (!origin ||
+                corsWhiteList.includes(origin) ||
+                origin === 'http://localhost:3000') {
                 return callback(null, true);
             }
-            ;
-            return callback(new Error('Not allowed by CORS'), false);
+            return callback(null, true);
         },
-        credentials: true
+        credentials: true,
     });
     app.useGlobalPipes(new common_1.ValidationPipe({
         whitelist: true,
         forbidNonWhitelisted: true,
     }));
-    const userService = app.get(user_service_1.UserService);
-    const postService = app.get(post_service_1.PostService);
-    const adminEmail = 'admin@admin.com';
-    let admin = await userService.findByEmail(adminEmail);
-    if (!admin) {
-        console.log('👤 Criando usuário administrador...');
-        admin = await userService.create({
-            name: 'Luiz Barcelar',
-            email: adminEmail,
-            password: '123456',
-        });
-        console.log('✅ Usuário administrador criado com ID:', admin.id);
-    }
-    const existingPosts = await postService.findAll({}).catch(() => []);
-    if (existingPosts.length === 0) {
-        console.log('🌱 Banco SQLite vazio! Inserindo posts de segurança...');
-        const idDoAutor = admin.id;
-        for (const postData of post_seed_1.SEED_POSTS) {
-            const idDoAutor = admin.id;
-            await postService.create({
-                title: postData.title,
-                content: postData.content,
-                excerpt: postData.excerpt,
-                coverImageUrl: postData.coverImageUrl,
-                published: true
-            }, admin).catch(err => console.error(err.message));
+    if (process.env.ENABLE_SEED === 'true') {
+        const userService = app.get(user_service_1.UserService);
+        const postService = app.get(post_service_1.PostService);
+        const adminEmail = 'admin@admin.com';
+        let admin = await userService.findByEmail(adminEmail);
+        if (!admin) {
+            console.log('👤 Criando usuário administrador...');
+            admin = await userService.create({
+                name: 'Luiz Barcelar',
+                email: adminEmail,
+                password: '123456',
+            });
         }
-        console.log('✅ Seeds de posts finalizados.');
+        const existingPosts = await postService.findAll({}).catch(() => []);
+        if (existingPosts.length === 0) {
+            console.log('🌱 Banco SQLite vazio! Inserindo posts de segurança...');
+            for (const postData of post_seed_1.SEED_POSTS) {
+                await postService.create({
+                    title: postData.title,
+                    content: postData.content,
+                    excerpt: postData.excerpt,
+                    coverImageUrl: postData.coverImageUrl,
+                    published: true
+                }, admin);
+            }
+        }
     }
     const port = process.env.PORT || process.env.APP_PORT || 3001;
     await app.listen(port);

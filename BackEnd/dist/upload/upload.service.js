@@ -36,7 +36,7 @@ let UploadService = class UploadService {
         const fileFullPath = (0, path_1.resolve)(uploadPath, fileName);
         (0, fs_1.writeFileSync)(fileFullPath, file.buffer);
         return {
-            url: `/${today}/${fileName}`,
+            url: `/uploads/${today}/${fileName}`,
         };
     }
 };

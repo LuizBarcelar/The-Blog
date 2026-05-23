@@ -13,7 +13,7 @@ class PostResponseDto {
         this.createdAt = post.createdAt;
         this.updatedAt = post.updatedAt;
         this.author = {
-            id: post.author?.id || '',
+            id: post.author?.id ?? '',
             name: post.author?.name || 'Autor Desconhecido',
             email: post.author?.email || '',
         };

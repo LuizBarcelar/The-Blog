@@ -40,7 +40,7 @@ export class UploadService {
     writeFileSync(fileFullPath, file.buffer)
 
     return {
-      url: `/${today}/${fileName}`,
+      url: `/uploads/${today}/${fileName}`,
     };
   }
 }

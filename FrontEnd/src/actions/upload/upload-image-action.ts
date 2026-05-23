@@ -31,6 +31,7 @@ export async function uploadImageAction(
 
   const uploadMaxSize =
     Number(process.env.NEXT_PUBLIC_IMAGE_UPLOAD_MAX_SIZE) || 921600;
+    
   if (file.size > uploadMaxSize) {
     return makeResult({ error: 'Arquivo muito grande' });
   }
@@ -40,7 +41,7 @@ export async function uploadImageAction(
   }
 
   const uploadResponse = await authenticatedApiRequest<{ url: string }>(
-    `${process.env.NEXT_PUBLIC_API_URL}/upload`,
+    `/upload`,
     {
       method: 'POST',
       body: formData,
@@ -51,7 +52,7 @@ export async function uploadImageAction(
     return makeResult({ error: uploadResponse.errors[0] });
   }
 
-  const url = `${process.env.IMAGE_SERVER_URL}${uploadResponse.data.url}`;
+  const url = `${process.env.NEXT_PUBLIC_IMAGE_SERVER_URL}${uploadResponse.data.url}`;
 
   return makeResult({ url });
 }

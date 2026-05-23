@@ -8,44 +8,30 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
-const auth_module_1 = require("./auth/auth.module");
+const typeorm_1 = require("@nestjs/typeorm");
+const config_1 = require("@nestjs/config");
 const user_module_1 = require("./user/user.module");
 const post_module_1 = require("./post/post.module");
-const config_1 = require("@nestjs/config");
-const typeorm_1 = require("@nestjs/typeorm");
+const auth_module_1 = require("./auth/auth.module");
 const upload_module_1 = require("./upload/upload.module");
-const all_exceptions_filter_1 = require("./common/filters/all-exceptions.filter");
-const core_1 = require("@nestjs/core");
-const throttler_1 = require("@nestjs/throttler");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            auth_module_1.AuthModule,
-            user_module_1.UserModule,
-            post_module_1.PostModule,
             config_1.ConfigModule.forRoot({
                 isGlobal: true,
             }),
-            throttler_1.ThrottlerModule.forRoot({
-                throttlers: [
-                    {
-                        ttl: 10000,
-                        limit: 10,
-                        blockDuration: 5000,
-                    },
-                ],
-            }),
             typeorm_1.TypeOrmModule.forRootAsync({
                 useFactory: () => {
-                    if (process.env.DB_TYPE === 'better-sqlite3') {
+                    const isSqlite = process.env.DB_TYPE === 'better-sqlite3';
+                    if (isSqlite) {
                         return {
                             type: 'better-sqlite3',
                             database: process.env.DB_DATABASE || './db.sqlite',
                             synchronize: process.env.DB_SYNCHRONIZE === '1',
-                            autoLoadEntities: process.env.DB_AUTO_LOAD_ENTITIES === '1',
+                            autoLoadEntities: true,
                         };
                     }
                     return {
@@ -56,24 +42,21 @@ exports.AppModule = AppModule = __decorate([
                         password: process.env.DB_PASSWORD,
                         database: process.env.DB_DATABASE,
                         synchronize: process.env.DB_SYNCHRONIZE === '1',
-                        autoLoadEntities: process.env.DB_AUTO_LOAD_ENTITIES === '1',
+                        autoLoadEntities: true,
+                        ssl: process.env.NODE_ENV === 'production'
+                            ? { rejectUnauthorized: false }
+                            : false,
+                        extra: {
+                            connectionTimeoutMillis: 5000,
+                        },
                     };
                 },
             }),
+            auth_module_1.AuthModule,
+            user_module_1.UserModule,
+            post_module_1.PostModule,
             upload_module_1.UploadModule,
         ],
-        controllers: [],
-        providers: [
-            {
-                provide: core_1.APP_FILTER,
-                useClass: all_exceptions_filter_1.AllExceptionsFilter,
-            },
-            {
-                provide: core_1.APP_GUARD,
-                useClass: throttler_1.ThrottlerGuard,
-            },
-        ],
-        exports: [],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
